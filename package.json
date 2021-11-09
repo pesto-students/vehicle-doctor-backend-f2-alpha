@@ -15,7 +15,8 @@
     "express": "^4.17.1",
     "mysql2": "^2.3.3-rc.0",
     "nodemon": "^2.0.14",
-    "sequelize": "^6.9.0"
+    "sequelize": "^6.9.0",
+    "uuid": "^8.3.2"
   },
   "repository": {
     "type": "git",
