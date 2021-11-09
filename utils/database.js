@@ -13,7 +13,13 @@ const sequelize = new Sequelize(`${DB_NAME}`, `${DATABASE_USER_NAME}`, `${DATABA
 	dialect: 'mysql',
 
 	// By default host is 'localhost'
-	host: `${DB_HOST}`
+	host: `${DB_HOST}`,
+	pool: {
+		max: 5,
+		min: 0,
+		acquire: 30000,
+		idle: 10000
+	}
 });
 
 // Exporting the sequelize object.
