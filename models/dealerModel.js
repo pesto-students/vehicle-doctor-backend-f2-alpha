@@ -6,6 +6,7 @@ const VehicleType = require('./vehicle_type');
 const dealerModel= db.define("dealer_tbl",{
     dealer_id:{
         type:Sequelize.BIGINT,
+        autoIncrement:true,
         primaryKey: true
     },
     name:{

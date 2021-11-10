@@ -13,6 +13,7 @@ const VehicleType = sequelize.define(
 	{
 		id: {
 			type: Sequelize.INTEGER,
+			autoIncrement:true,
 			primaryKey: true
 		},
 		vehicle_type: {
@@ -27,5 +28,9 @@ const VehicleType = sequelize.define(
 		freezeTableName: true
 	}
 );
+
+// VehicleType.sync({force:true}).then(() => {
+//     console.log('table created');
+//   });
 
 module.exports = VehicleType;

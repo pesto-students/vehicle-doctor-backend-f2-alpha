@@ -6,6 +6,7 @@ const Dealer = require('./dealerModel')
 const dealer_serviceModel = db.define("dealer_service_tbl",{
         service_id:{
             type:Sequelize.BIGINT,
+            autoIncrement:true,
             primaryKey:true
         },
         discription :{
@@ -37,16 +38,11 @@ dealer_serviceModel.associate = function() {
 
 Dealer.hasMany(dealer_serviceModel,{as:'Services'})
 
-//Need to Confirm
+//Need for Future
 
-// dealer_serviceModel.belongsTo(Dealer,{
-//     foreignKey:Dealer.dealer_id,
-//     as :"Dealer"
-// })
-
-dealer_serviceModel.sync({force:true}).then(() => {
-    console.log('table created');
-  });
+// dealer_serviceModel.sync({force:true}).then(() => {
+//     console.log('table created');
+//   });
 
 
 module.exports = dealer_serviceModel;

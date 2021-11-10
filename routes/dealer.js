@@ -17,17 +17,17 @@ router.get('/dealerServices', (req, res, next) => dealerServices.findAll()
 			res.send(dealerServices))
 			.catch(err => res.send(err)));
 
-router.post('/addDealer', (req, res) => {
-	let created_at = datetime.now;
-	let modified_at = datetime.now;
-	let {dealer_id,name,mobile,email,password,gst_no,locality,city,state,
-	      pincode,lat,lng,vehicle_type_id} = req.body;
-
-	dealerModel.create({
-			dealer_id,name,mobile,email,password,gst_no,locality,city,state,
-			pincode,lat,lng,vehicle_type_id,created_at,modified_at
-		  })
-			.then(dealerModel => res.redirect(dealerModel.dealer_id))
-			.catch(err => res.render('error', {error:err.message}))
+router.post('/addDealer', async (req, res) => {
+	const result = await dealerModel.create(req.body);  
+	const resultID=result.dealer_id;
+	console.log(resultID);
+	var serviceData = req.body.services.map(function(item) {
+		var updatedService = Object.assign({}, item);
+		updatedService.dealerTblDealerId =resultID
+		return updatedService;
+	})
+	console.log(serviceData);
+	await dealerServices.bulkCreate(serviceData)      
+    res.json(result);
 });
 module.exports = router;
