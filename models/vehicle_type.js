@@ -12,7 +12,7 @@ const VehicleType = sequelize.define(
 	'vehicle_type_lookup',
 	{
 		id: {
-			type: Sequelize.UUIDV4,
+			type: Sequelize.INTEGER,
 			primaryKey: true
 		},
 		vehicle_type: {

@@ -22,11 +22,12 @@ router.get('/types', (req, res) =>
 
 // Add a vehicle type
 router.get('/addtype', (req, res) => {
-	const data = {
-		vehicle_type: 'Car'
-	};
-	let { vehicle_type } = data;
-	VehicleType.create({ vehicle_type })
+	var datetime = new Date();
+	let created_at = datetime.now;
+	let modified_at = datetime.now;
+	let { id,vehicle_type} = req.body;
+	
+	VehicleType.create({ id,vehicle_type,created_at,modified_at })
 		.then((type) => res.redirect('/vehicle/types'))
 		.catch((err) => console.log(err));
 });
