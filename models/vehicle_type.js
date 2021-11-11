@@ -1,11 +1,11 @@
 const Sequelize = require('sequelize');
 const sequelize = require('../utils/database');
 
-//Test DB
-sequelize
-	.authenticate()
-	.then(() => console.log('Database connected...'))
-	.catch((err) => console.log(`Error: ${err}`));
+//To Test DB Connection
+// sequelize
+// 	.authenticate()
+// 	.then(() => console.log('Database connected...'))
+// 	.catch((err) => console.log(`Error: ${err}`));
 
 // sequelize model for vehicle_type table
 const VehicleType = sequelize.define(
