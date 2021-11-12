@@ -3,9 +3,35 @@ const router = express.Router();
 const dealerModel = require('../models/dealerModel');
 const dealerServices = require("../models/dealer_serviceModel");
 
-router.get('/', (req, res, next) => {
-	res.send('All the dealer details');
+
+router.get('/:id',async (req, res, next) =>{
+	var dealerID = req.params.id;
+
+    let dealerData = await dealerModel.findAll(
+	{
+	where :{dealer_id: dealerID},
+	include:[{
+		model:dealerServices,
+		as :'Services'
+	}]
+	})
+	res.json(dealerData);
 });
+
+
+router.get('/dealers/:serviceType',async (req, res, next)  =>{
+	var serviceType = req.params.serviceType;
+
+    let dealersResult = await dealerModel.findAll(
+	{
+	include:[{
+		model:dealerServices,
+		as :'Services',
+		where :{service_type_id: serviceType},
+	}]
+	})
+	res.json(dealersResult);
+})
 
 
 router.get('/alldealers/:city',async (req, res, next) =>{
@@ -13,15 +39,16 @@ router.get('/alldealers/:city',async (req, res, next) =>{
 
     let dealersResult = await dealerModel.findAll(
 	{
-	where :{city: cityValue}
+	where :{city: cityValue},
+	include:[{
+		model:dealerServices,
+		as :'Services'
+	}]
 	})
 	res.json(dealersResult);
 });
 
-router.get('/dealerServices', (req, res, next) => dealerServices.findAll()
-			.then(dealerServices=>
-			res.send(dealerServices))
-			.catch(err => res.send(err)));
+
 
 router.post('/addDealer', async (req, res) => {
 	const result = await dealerModel.create(req.body);  
