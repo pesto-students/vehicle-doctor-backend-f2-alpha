@@ -16,6 +16,8 @@
     "mysql2": "^2.3.3-rc.0",
     "nodemon": "^2.0.14",
     "sequelize": "^6.9.0",
+    "swagger-jsdoc": "^6.1.0",
+    "swagger-ui-express": "^4.1.6",
     "uuid": "^8.3.2"
   },
   "repository": {
