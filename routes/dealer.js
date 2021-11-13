@@ -9,8 +9,6 @@ router.get('/:id',dealerController.getDealerbyID)
 
 router.get('/currentbooking/:refnum',dealerController.getCurrentBooking)
 
-
-
 router.get('/dealers/:serviceType',async (req, res, next)  =>{
 	var serviceType = req.params.serviceType;
 

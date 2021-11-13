@@ -10,4 +10,6 @@ router.get('/', (req, res, next) => {
 // Retrieve customer details with Customer Id
 router.get('/:id', customers.findOne);
 
+router.post('/Service/Booking',customers.addCurrentBooking);
+
 module.exports = router;

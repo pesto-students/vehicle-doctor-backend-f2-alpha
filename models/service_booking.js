@@ -100,9 +100,9 @@ serviceBookingModel.associate = function() {
     serviceBookingModel.belongsTo(VehicleType, {foreignKey: 'vehicle_type_id', as: 'Vehicletype'})
 };
 
-serviceBookingModel.sync({force:true}).then(() => {
-    console.log('table created');
-  });
+// serviceBookingModel.sync({force:true}).then(() => {
+//     console.log('table created');
+//   });
 
 module.exports =serviceBookingModel;
 
