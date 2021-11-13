@@ -3,20 +3,12 @@ const router = express.Router();
 const dealerModel = require('../models/dealerModel');
 const dealerServices = require("../models/dealer_serviceModel");
 
+const dealerController = require('../controllers/dealercontroller');
 
-router.get('/:id',async (req, res, next) =>{
-	var dealerID = req.params.id;
+router.get('/:id',dealerController.getDealerbyID)
 
-    let dealerData = await dealerModel.findAll(
-	{
-	where :{dealer_id: dealerID},
-	include:[{
-		model:dealerServices,
-		as :'Services'
-	}]
-	})
-	res.json(dealerData);
-});
+router.get('/currentbooking/:refnum',dealerController.getCurrentBooking)
+
 
 
 router.get('/dealers/:serviceType',async (req, res, next)  =>{
