@@ -1,6 +1,5 @@
 const express = require('express');
 const router = express.Router();
-//const custAddressModel = require('../models/customer_address');
 const customers = require('../controllers/customer.controller');
 
 router.get('/', (req, res, next) => {
@@ -8,7 +7,10 @@ router.get('/', (req, res, next) => {
 });
 
 // Retrieve customer details with Customer Id
-router.get('/:id', customers.findOne);
+router.get('/:id', customers.getCustomerById);
+
+// Add a customer
+router.post('/add', customers.createCustomer);
 
 router.post('/Service/Booking',customers.addCurrentBooking);
 
