@@ -34,46 +34,6 @@ const  serviceBookingModel = db.define("service_booking",{
     drop_date :{
         type:Sequelize.DATEONLY
     },
-    customer_id :{
-        type: Sequelize.BIGINT,
-        allowNull: false,
-        references: {        
-          model: Customer,
-          key: 'customer_id'
-        }
-    },
-    dealer_id :{
-        type: Sequelize.BIGINT,
-        allowNull: false,
-        references: {        
-          model: dealerModel,
-          key: 'dealer_id'
-        }
-    },
-    service_id :{
-        type: Sequelize.BIGINT,
-        allowNull: false,
-        references: {        
-          model: dealerServiceModel,
-          key: 'service_id'
-        }
-    },
-    status_id :{
-        type: Sequelize.BIGINT,
-        allowNull: false,
-        references: {        
-          model: statusModel,
-          key: 'status_id'
-        }
-    },
-    vehicle_type_id :{
-        type: Sequelize.INTEGER,
-        allowNull: false,
-        references: {        
-          model: VehicleType,
-          key: VehicleType.id
-        }
-    }
     
 },{
     timestamps: true,
@@ -82,23 +42,21 @@ const  serviceBookingModel = db.define("service_booking",{
     freezeTableName: true,
 });
 
-serviceBookingModel.associate = function() {
     serviceBookingModel.belongsTo(Customer, {foreignKey: 'customer_id', as: 'Customer'})
-};
+    Customer.hasOne(serviceBookingModel, {foreignKey: 'customer_id', as: 'Customer'})
 
-serviceBookingModel.associate = function() {
     serviceBookingModel.belongsTo(dealerModel, {foreignKey: 'dealer_id', as: 'Dealer'})
-};
-serviceBookingModel.associate = function() {
-    serviceBookingModel.belongsTo(dealerServiceModel, {foreignKey: 'service_id', as: 'dealerService'})
-};
-serviceBookingModel.associate = function() {
-    serviceBookingModel.belongsTo(statusModel, {foreignKey: 'status_id', as: 'status'})
-};
+    dealerModel.hasOne(serviceBookingModel, {foreignKey: 'dealer_id', as: 'Dealer'})
 
-serviceBookingModel.associate = function() {
-    serviceBookingModel.belongsTo(VehicleType, {foreignKey: 'vehicle_type_id', as: 'Vehicletype'})
-};
+    serviceBookingModel.belongsTo(dealerServiceModel, {foreignKey: 'service_id', as: 'dealerService'})
+    dealerServiceModel.hasOne(serviceBookingModel, {foreignKey: 'service_id', as: 'dealerService'})
+
+    serviceBookingModel.belongsTo(statusModel, {foreignKey: 'status_id', as: 'status'})
+    statusModel.hasOne(serviceBookingModel, {foreignKey: 'status_id', as: 'status'})
+
+    serviceBookingModel.belongsTo(VehicleType, {foreignKey: 'vehicle_type_id', as: 'Vehicle_type'})
+    VehicleType.hasOne(serviceBookingModel, {foreignKey: 'vehicle_type_id', as: 'Vehicle_type'})
+
 
 // serviceBookingModel.sync({force:true}).then(() => {
 //     console.log('table created');

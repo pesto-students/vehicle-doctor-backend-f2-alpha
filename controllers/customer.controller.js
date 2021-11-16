@@ -1,6 +1,5 @@
 const Customer = require('../models/customerModel');
 const CustomerAddress = require('../models/customer_address');
-const serviceBooking = require('../models/service_booking');
 
 // Find Customer By Primary Key
 exports.getCustomerById = async (req, res, next) => {
@@ -64,14 +63,4 @@ const createAddress = async (customer_tbl_res, location) => {
 	}
 };
 
-exports.addCurrentBooking = async (req, res, next) => {
-	try {
-		const result = await serviceBooking.create(req.body);
-		res.status(201).json(result.refrence_id);
-	} catch (err) {
-		if (!err.statusCode) {
-			err.statusCode = 500;
-		}
-		next(err);
-	}
-};
+

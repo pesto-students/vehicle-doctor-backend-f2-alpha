@@ -41,14 +41,6 @@ const dealerModel= db.define("dealer_tbl",{
     },
     lng:{
         type:Sequelize.DECIMAL
-    },
-    vehicle_type_id :{
-        type: Sequelize.INTEGER,
-        allowNull: false,
-        references: {        
-          model: VehicleType,
-          key: VehicleType.id
-        }
     }
 },{
     timestamps: true,
@@ -58,9 +50,11 @@ const dealerModel= db.define("dealer_tbl",{
 });
 
 
-dealerModel.associate = function() {
-    dealerModel.belongsTo(VehicleType, {foreignKey: 'vehicle_type_id', as: 'Vehicletype'})
-};
+dealerModel.belongsTo(VehicleType, {foreignKey: 'vehicle_type_id', as: 'Vehicletype'})
+
+    
+VehicleType.hasOne(dealerModel,{foreignKey:'vehicle_type_id',as:'Vehicletype'})
+
 
 //Need for Future purpose
 

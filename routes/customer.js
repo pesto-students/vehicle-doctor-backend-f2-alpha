@@ -12,6 +12,6 @@ router.get('/:id', customers.getCustomerById);
 // Add a customer
 router.post('/add', customers.createCustomer);
 
-router.post('/Service/Booking',customers.addCurrentBooking);
+
 
 module.exports = router;

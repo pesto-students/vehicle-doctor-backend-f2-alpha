@@ -29,6 +29,15 @@ const VehicleType = sequelize.define(
 	}
 );
 
+
+
+	// VehicleType.associate = function (models) {
+	// 	VehicleType.belongsTo(models.dealers, { 
+	// 	  foreignKey: 'dealer_id', 
+	// 	  as: 'dealers' 
+	// 	});
+	//   };
+
 // VehicleType.sync({force:true}).then(() => {
 //     console.log('table created');
 //   });
