@@ -13,5 +13,7 @@ router.get('/:id', customers.getCustomerById);
 router.post('/add', customers.createCustomer);
 
 
+// Add service feedback
+router.post('/service/feedback', customers.addServiceFeedback);
 
 module.exports = router;
