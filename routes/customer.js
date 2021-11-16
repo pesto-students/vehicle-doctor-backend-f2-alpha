@@ -12,6 +12,9 @@ router.get('/:id', customers.getCustomerById);
 // Add a customer
 router.post('/add', customers.createCustomer);
 
-router.post('/Service/Booking',customers.addCurrentBooking);
+router.post('/Service/Booking', customers.addCurrentBooking);
+
+// Add service feedback
+router.post('/service/feedback', customers.addServiceFeedback);
 
 module.exports = router;
