@@ -1,4 +1,4 @@
-const Sequelize = require('sequelize');
+const { Sequelize, DataTypes } = require('sequelize');
 const db = require('../utils/database');
 
 // Sequelize model for Customer table
@@ -6,20 +6,20 @@ const Customer = db.define(
 	'customer_tbl',
 	{
 		customer_id: {
-			type: Sequelize.BIGINT,
+			type: DataTypes.BIGINT,
 			autoIncrement: true,
 			primaryKey: true
 		},
 		customer_name: {
-			type: Sequelize.STRING(100),
+			type: DataTypes.STRING(100),
 			allowNull: false
 		},
 		mobile: {
-			type: Sequelize.STRING(10),
+			type: DataTypes.STRING(10),
 			allowNull: false
 		},
 		email: {
-			type: Sequelize.STRING(100),
+			type: DataTypes.STRING(100),
 			allowNull: false
 		}
 	},
@@ -31,7 +31,7 @@ const Customer = db.define(
 	}
 );
 
-//? sync db tables with models
+// //? sync db tables with models
 // Customer.sync({ force: true }).then(() => {
 // 	console.log('table (re)created');
 // });

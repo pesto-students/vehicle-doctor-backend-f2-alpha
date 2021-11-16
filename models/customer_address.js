@@ -1,5 +1,4 @@
-const Sequelize = require('sequelize');
-const sequelize = require('../utils/database');
+const { Sequelize, DataTypes } = require('sequelize');
 const db = require('../utils/database');
 const Customer = require('./customerModel');
 
@@ -8,36 +7,36 @@ const CustomerAddress = db.define(
 	'customer_add_tbl',
 	{
 		id: {
-			type: Sequelize.BIGINT,
+			type: DataTypes.BIGINT,
 			autoIncrement: true,
 			primaryKey: true
 		},
 		locality: {
-			type: Sequelize.STRING(200),
+			type: DataTypes.STRING(200),
 			allowNull: false
 		},
 		city: {
-			type: Sequelize.STRING(45),
+			type: DataTypes.STRING(45),
 			allowNull: false
 		},
 		state: {
-			type: Sequelize.STRING(45),
+			type: DataTypes.STRING(45),
 			allowNull: false
 		},
 		pincode: {
-			type: Sequelize.BIGINT,
+			type: DataTypes.BIGINT,
 			allowNull: false
 		},
 		lat: {
-			type: Sequelize.DECIMAL(10, 0),
+			type: DataTypes.DECIMAL(10, 0),
 			allowNull: false
 		},
 		long: {
-			type: Sequelize.DECIMAL(10, 0),
+			type: DataTypes.DECIMAL(10, 0),
 			allowNull: false
 		},
 		isHomeAddress: {
-			type: Sequelize.TINYINT(1),
+			type: DataTypes.TINYINT(1),
 			allowNull: false
 		}
 	},
@@ -49,8 +48,13 @@ const CustomerAddress = db.define(
 	}
 );
 
-//Customer.hasMany(CustomerAddress);
-CustomerAddress.belongsTo(Customer, { foreignKey: 'customer_id' });
+Customer.hasMany(CustomerAddress, {
+	foreignKey: { name: 'customer_id', allowNull: false },
+	as: 'customer_location'
+});
+CustomerAddress.belongsTo(Customer, {
+	foreignKey: { name: 'customer_id', allowNull: false }
+});
 
 //? sync db tables with models
 // CustomerAddress.sync({ force: true }).then(() => {
