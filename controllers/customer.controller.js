@@ -1,6 +1,7 @@
 const Customer = require('../models/customerModel');
 const CustomerAddress = require('../models/customer_address');
 const serviceBooking = require('../models/service_booking');
+const ServiceHistory = require('../models/service_history');
 
 // Find Customer By Primary Key
 exports.getCustomerById = async (req, res, next) => {
@@ -25,20 +26,19 @@ exports.getCustomerById = async (req, res, next) => {
 };
 
 // Create New Customer
-exports.createCustomer = async (req, res) => {
+exports.createCustomer = async (req, res, next) => {
 	try {
 		const result = await Customer.create(req.body);
 		const customerId = result.customer_id;
-		console.log(customerId);
+
 		let addressData = createAddress(result, req.body.location);
 		let updatedCustomer = Object.assign({}, result, { addressData });
 		res.json(result);
-	} catch {
-		(err) => {
-			res.status(500).send({
-				message: 'Error occurred while creating the Customer' + err
-			});
-		};
+	} catch (err) {
+		if (!err.statusCode) {
+			err.statusCode = 500;
+		}
+		next(err);
 	}
 };
 
@@ -68,6 +68,19 @@ exports.addCurrentBooking = async (req, res, next) => {
 	try {
 		const result = await serviceBooking.create(req.body);
 		res.status(201).json(result.refrence_id);
+	} catch (err) {
+		if (!err.statusCode) {
+			err.statusCode = 500;
+		}
+		next(err);
+	}
+};
+
+// Add Feedback for a Service
+exports.addServiceFeedback = async (req, res, next) => {
+	try {
+		const result = await ServiceHistory.create(req.body);
+		res.status(201).json(result.id);
 	} catch (err) {
 		if (!err.statusCode) {
 			err.statusCode = 500;
