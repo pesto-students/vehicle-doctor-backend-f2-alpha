@@ -1,6 +1,8 @@
 const dealerModel = require('../models/dealerModel');
 const dealerServices = require("../models/dealer_serviceModel");
 const vehicleModel = require('../models/vehicle_type');
+const serviceModel = require('../models/service_history');
+const { Sequelize } = require('sequelize');
 
 
 exports.getDealerbyID = async (req, res, next) => {
@@ -20,6 +22,13 @@ exports.getDealerbyID = async (req, res, next) => {
               model:dealerServices,
               as :'Services' ,
               attributes:['discription','cost']
+            },
+            {
+              model:serviceModel,
+              as:'dealer_history',
+              attributes:['rating','comments'],
+              order: [["created_at", "DESC"]],
+              limit:3
             }
         ]
 	})
@@ -36,17 +45,29 @@ exports.getDealerbyServiceType = async (req, res, next) => {
    try{
         var serviceType = req.params.serviceType;
         let dealersResult = await dealerModel.findAll(
+          
             {
-            include:[{
+          
+            include:[
+            {
               model:dealerServices,
               as :'Services',
               where :{service_type_id: serviceType},
-            }, {
+            }, 
+            {
               model:vehicleModel,
               as :'Vehicletype',
               attributes: ['vehicle_type']
-            },]
-            })
+            },
+            {
+              model:serviceModel,
+              as:'dealer_history',
+              attributes:['rating','comments'],
+              order: [["created_at", "DESC"]],
+              limit:3
+            }
+          ],
+          })
             res.json(dealersResult)
      }
      catch (err) {
@@ -73,7 +94,14 @@ exports.getDealerbyServiceType = async (req, res, next) => {
                  model:dealerServices,
                  as :'Services' ,
                  attributes:['discription','cost']
-               }
+               },
+               {
+                model:serviceModel,
+                as:'dealer_history',
+                attributes:['rating','comments'],
+                order: [["created_at", "DESC"]],
+                limit:3
+              }
            ]
             })
              res.json(dealersResult)
