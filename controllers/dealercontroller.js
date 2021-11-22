@@ -9,6 +9,7 @@ const { Sequelize } = require('sequelize');
 exports.getDealerbyID = async (req, res, next) => {
     try {
     var dealerID = req.params.id;
+    var serviceID = req.params.serviceID;
     let dealerData = await dealerModel.findOne(
 	{
         attributes:['name','mobile','gst_no','locality','city','state','pincode'],
@@ -22,7 +23,8 @@ exports.getDealerbyID = async (req, res, next) => {
             {  
               model:dealerServices,
               as :'Services' ,
-              attributes:['discription','cost']
+              attributes:['discription','cost'],
+              where:{service_type_id:serviceID}
             },
             {
               model:serviceModel,
@@ -123,7 +125,7 @@ exports.getDealerbyServiceType = async (req, res, next) => {
         var id = req.params.id;
           let servicesResult = await dealerServices.findAll(
              {
-              attributes:['service_id'],
+              attributes:['service_id','discription'],
               where :{dealerTblDealerId: id},
               include:[
                 {

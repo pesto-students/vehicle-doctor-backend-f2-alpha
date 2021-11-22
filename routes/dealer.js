@@ -3,7 +3,7 @@ const router = express.Router();
 
 const dealerController = require('../controllers/dealercontroller');
 
-router.get('/dealerByID/:id',dealerController.getDealerbyID);
+router.get('/dealerByID/:id/:serviceID',dealerController.getDealerbyID);
 
 router.get('/serviceType/:serviceType',dealerController.getDealerbyServiceType);
 
