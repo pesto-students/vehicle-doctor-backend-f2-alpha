@@ -7,8 +7,14 @@ router.get('/dealerByID/:id',dealerController.getDealerbyID);
 
 router.get('/serviceType/:serviceType',dealerController.getDealerbyServiceType);
 
-router.get('/dealersByCity/:city',dealerController.getDealersByCity);
+router.get('/dealersByCity/:city/:vehicleid',dealerController.getDealersByCity);
+
+router.get('/serviceByDealerID/:id',dealerController.getServiceByDealerID);
 
 router.post('/addDealer',dealerController.AddDealer)
+
+// router.get('/test', (req, res, next) => {
+// 	res.send('All the service details');
+// });
 
 module.exports = router;

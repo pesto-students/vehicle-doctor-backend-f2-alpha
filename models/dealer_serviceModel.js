@@ -32,15 +32,15 @@ const dealer_serviceModel = db.define("dealer_service_tbl",{
 	}
 );
 
-dealer_serviceModel.associate = function() {
-    dealer_serviceModel.belongsTo(serviceTypes, {foreignKey: 'service_type_id', as: 'serviceTypes'})
-};
+dealer_serviceModel.belongsTo(serviceTypes, {foreignKey: 'service_type_id', as: 'serviceTypes'})
+
+serviceTypes.hasOne(dealer_serviceModel,{foreignKey:'service_type_id',as:'serviceTypes'})
 
 Dealer.hasMany(dealer_serviceModel,{as:'Services'})
 
 //Need for Future
 
-// dealer_serviceModel.sync({force:true}).then(() => {
+// dealer_serviceModel.sync({alter:true}).then(() => {
 //     console.log('table created');
 //   });
 
