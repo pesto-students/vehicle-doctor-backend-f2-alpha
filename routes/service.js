@@ -7,7 +7,10 @@ router.get('/', (req, res, next) => {
 	res.send('All the service details');
 });
 
-router.get('/types', (req, res, next) => serviceTypes.findAll()
+router.get('/types/:service_type', (req, res, next) => serviceTypes.findAll(
+		   {
+	       where :{service_type: req.params.service_type},
+		  })
 			.then(serviceTypes=>
 			res.send(serviceTypes))
 			.catch(err => res.send(err)));
