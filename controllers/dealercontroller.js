@@ -131,7 +131,7 @@ exports.getDealerbyServiceType = async (req, res, next) => {
                 {
                  model: serviceTypes,
                  as :'serviceTypes' ,
-                 attributes:['service_type']
+                 attributes:['service_type','service_name']
                 }
            ]
             })
