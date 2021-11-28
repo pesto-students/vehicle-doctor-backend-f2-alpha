@@ -1,19 +1,19 @@
 const Sequelize = require('sequelize');
-
-// Specify the connection for rds
-const DB_HOST = 'aws-simplified.cf4zjdrz011j.us-east-2.rds.amazonaws.com';
-const DATABASE_USER_NAME = 'admin';
-const DATABASE_PASSWORD = 'Fiserv05';
-const DB_NAME = 'drvehicle';
+require('dotenv').config()
+ const host     = process.env.RDS_HOSTNAME;
+ const user     = process.env.RDS_USERNAME;
+ const password = process.env.RDS_PASSWORD;
+ const port     = process.env.RDS_PORT;
+ const dbname   = process.env.RDS_DB_NAME
 
 // Creating new Object of Sequelize
-const sequelize = new Sequelize(`${DB_NAME}`, `${DATABASE_USER_NAME}`, `${DATABASE_PASSWORD}`, {
+const sequelize = new Sequelize(`${dbname}`, `${user}`, `${password}`, {
 	// Explicitly specifying
 	// mysql database
 	dialect: 'mysql',
-
+    port:port,
 	// By default host is 'localhost'
-	host: `${DB_HOST}`,
+	host: `${host}`,
 	pool: {
 		max: 5,
 		min: 0,
