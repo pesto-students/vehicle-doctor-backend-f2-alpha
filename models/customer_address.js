@@ -13,31 +13,24 @@ const CustomerAddress = db.define(
 		},
 		locality: {
 			type: DataTypes.STRING(200),
-			allowNull: false
 		},
 		city: {
 			type: DataTypes.STRING(45),
-			allowNull: false
 		},
 		state: {
 			type: DataTypes.STRING(45),
-			allowNull: false
 		},
 		pincode: {
 			type: DataTypes.BIGINT,
-			allowNull: false
 		},
 		lat: {
 			type: DataTypes.DECIMAL(10, 0),
-			allowNull: false
 		},
 		long: {
 			type: DataTypes.DECIMAL(10, 0),
-			allowNull: false
 		},
 		isHomeAddress: {
 			type: DataTypes.TINYINT(1),
-			allowNull: false
 		}
 	},
 	{
@@ -57,7 +50,7 @@ CustomerAddress.belongsTo(Customer, {
 });
 
 //? sync db tables with models
-// CustomerAddress.sync({ force: true }).then(() => {
+// CustomerAddress.sync({ alter: true }).then(() => {
 // 	console.log('table (re)created');
 // });
 

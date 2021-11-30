@@ -44,7 +44,11 @@ exports.getDealerbyID = async (req, res, next) => {
 
 exports.getDealerbyServiceType = async (req, res, next) => {
 	try {
+		var whereStatement = {};
 		var serviceType = req.params.serviceType;
+		if(req.params.vehicleID !=null)
+		whereStatement.id = req.params.vehicleID;
+
 		let dealersResult = await dealerModel.findAll({
 			include: [
 				{
@@ -55,7 +59,8 @@ exports.getDealerbyServiceType = async (req, res, next) => {
 				{
 					model: vehicleModel,
 					as: 'Vehicletype',
-					attributes: ['vehicle_type']
+					attributes: ['vehicle_type'],
+					where: whereStatement
 				},
 				{
 					model: serviceModel,
