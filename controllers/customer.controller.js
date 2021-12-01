@@ -24,6 +24,29 @@ exports.getCustomerById = async (req, res, next) => {
 	}
 };
 
+exports.getCustomerByMobileNum = async (req, res, next) => {
+	try {
+		const mobile = req.params.mobile;
+		const customerData = await Customer.findOne({
+			attributes: ['customer_name','mobile','email'],
+			where: { mobile: mobile },
+			include: [
+				{
+					model: CustomerAddress,
+					as: 'customer_location',
+					attributes: ['locality', 'city', 'state', 'pincode', 'lat', 'long', 'isHomeAddress']
+				}
+			]
+		});
+		res.send(customerData);
+	} catch (err) {
+		if (!err.statusCode) {
+			err.statusCode = 500;
+		}
+		next(err);
+	}
+};
+
 // Create New Customer
 exports.createCustomer = async (req, res, next) => {
 	try {
