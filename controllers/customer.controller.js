@@ -51,11 +51,9 @@ exports.getCustomerByMobileNum = async (req, res, next) => {
 exports.createCustomer = async (req, res, next) => {
 	try {
 		const result = await Customer.create(req.body);
-		const customerId = result.customer_id;
-
-		let addressData = createAddress(result, req.body.location);
-		let updatedCustomer = Object.assign({}, result, { addressData });
-		res.json(result);
+		let addressData = await createAddress(result, req.body.location);
+		let updatedCustomer = Object.assign({}, result.dataValues, { addressData });
+		res.json(updatedCustomer);
 	} catch (err) {
 		if (!err.statusCode) {
 			err.statusCode = 500;
