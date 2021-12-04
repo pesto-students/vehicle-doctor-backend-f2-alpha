@@ -15,6 +15,8 @@ router.post('/addDealer', dealerController.AddDealer);
 
 router.get('/checkLogin/:email/:password', dealerController.checkDealerCredentials);
 
+router.get('/servicesByDealer/:id', dealerController.getAllServiceByDealer);
+
 // router.get('/test', (req, res, next) => {
 // 	res.send('All the service details');
 // });

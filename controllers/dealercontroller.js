@@ -195,3 +195,27 @@ exports.checkDealerCredentials = async (req, res, next) => {
 		next(err);
 	}
 };
+
+// Get all Services by a Dealer based on DealerID
+exports.getAllServiceByDealer = async (req, res, next) => {
+	try {
+		var id = req.params.id;
+		let servicesResult = await dealerServices.findAll({
+			attributes: ['service_id', 'discription', 'cost'],
+			where: { dealerTblDealerId: id },
+			include: [
+				{
+					model: serviceTypes,
+					as: 'serviceTypes',
+					attributes: ['service_type', 'service_name']
+				}
+			]
+		});
+		res.json(servicesResult);
+	} catch (err) {
+		if (!err.statusCode) {
+			err.statusCode = 500;
+		}
+		next(err);
+	}
+};
