@@ -13,7 +13,7 @@ router.get('/serviceByDealerID/:id', dealerController.getServiceByDealerID);
 
 router.post('/addDealer', dealerController.AddDealer);
 
-router.post('/checkLogin', dealerController.checkDealerCredentials);
+router.get('/checkLogin/:email/:password', dealerController.checkDealerCredentials);
 
 // router.get('/test', (req, res, next) => {
 // 	res.send('All the service details');

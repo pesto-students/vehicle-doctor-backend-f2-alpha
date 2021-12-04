@@ -46,8 +46,7 @@ exports.getDealerbyServiceType = async (req, res, next) => {
 	try {
 		var whereStatement = {};
 		var serviceType = req.params.serviceType;
-		if(req.params.vehicleID !=null)
-		whereStatement.id = req.params.vehicleID;
+		if (req.params.vehicleID != null) whereStatement.id = req.params.vehicleID;
 
 		let dealersResult = await dealerModel.findAll({
 			include: [
@@ -162,15 +161,27 @@ exports.AddDealer = async (req, res, next) => {
 //Check dealer credentials based on username & password entered
 exports.checkDealerCredentials = async (req, res, next) => {
 	try {
-		var email = req.body.email;
-		var password = req.body.password;
+		var email = req.params.email;
+		var password = req.params.password;
 
 		let dealerData = await dealerModel.findOne({
-			attributes: ['dealer_id'],
+			attributes: [
+				'dealer_id',
+				'name',
+				'mobile',
+				'email',
+				'password',
+				'gst_no',
+				'locality',
+				'city',
+				'state',
+				'pincode'
+			],
 			where: {
 				email,
 				password
-			}
+			},
+			include: [{ model: vehicleModel, as: 'Vehicletype', attributes: ['vehicle_type'] }]
 		});
 		if (dealerData) {
 			res.send(dealerData);
