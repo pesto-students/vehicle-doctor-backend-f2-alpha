@@ -17,6 +17,7 @@ router.get('/checkLogin/:email/:password', dealerController.checkDealerCredentia
 
 router.get('/servicesByDealer/:id', dealerController.getAllServiceByDealer);
 
+router.post('/addService', dealerController.addDealerService);
 // router.get('/test', (req, res, next) => {
 // 	res.send('All the service details');
 // });

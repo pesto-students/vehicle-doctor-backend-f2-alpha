@@ -219,3 +219,31 @@ exports.getAllServiceByDealer = async (req, res, next) => {
 		next(err);
 	}
 };
+
+// Add a Dealer Service
+exports.addDealerService = async (req, res, next) => {
+	try {
+		// Check if Service already exists in Service Table
+		const serviceCheck = await dealerServices.findOne({
+			attributes: ['service_id'],
+			where: {
+				dealerTblDealerId: req.body.dealerTblDealerId,
+				service_type_id: req.body.service_type_id
+			}
+		});
+		//console.log(serviceCheck);
+		if (serviceCheck !== null) {
+			res.send('Dealer service already exists');
+		} else {
+			// Add the Service to Service Table
+			const result = await dealerServices.create(req.body);
+			// console.log(result.service_id);
+			res.json(result);
+		}
+	} catch (err) {
+		if (!err.statusCode) {
+			err.statusCode = 500;
+		}
+		next(err);
+	}
+};
