@@ -46,8 +46,7 @@ exports.getDealerbyServiceType = async (req, res, next) => {
 	try {
 		var whereStatement = {};
 		var serviceType = req.params.serviceType;
-		if(req.params.vehicleID !=null)
-		whereStatement.id = req.params.vehicleID;
+		if (req.params.vehicleID != null) whereStatement.id = req.params.vehicleID;
 
 		let dealersResult = await dealerModel.findAll({
 			include: [
@@ -162,20 +161,84 @@ exports.AddDealer = async (req, res, next) => {
 //Check dealer credentials based on username & password entered
 exports.checkDealerCredentials = async (req, res, next) => {
 	try {
-		var email = req.body.email;
-		var password = req.body.password;
+		var email = req.params.email;
+		var password = req.params.password;
 
 		let dealerData = await dealerModel.findOne({
-			attributes: ['dealer_id'],
+			attributes: [
+				'dealer_id',
+				'name',
+				'mobile',
+				'email',
+				'password',
+				'gst_no',
+				'locality',
+				'city',
+				'state',
+				'pincode'
+			],
 			where: {
 				email,
 				password
-			}
+			},
+			include: [{ model: vehicleModel, as: 'Vehicletype', attributes: ['vehicle_type'] }]
 		});
 		if (dealerData) {
 			res.send(dealerData);
 		} else {
 			res.send({ message: 'Wrong email/password combination! Please try again' });
+		}
+	} catch (err) {
+		if (!err.statusCode) {
+			err.statusCode = 500;
+		}
+		next(err);
+	}
+};
+
+// Get all Services by a Dealer based on DealerID
+exports.getAllServiceByDealer = async (req, res, next) => {
+	try {
+		var id = req.params.id;
+		let servicesResult = await dealerServices.findAll({
+			attributes: ['service_id', 'discription', 'cost'],
+			where: { dealerTblDealerId: id },
+			include: [
+				{
+					model: serviceTypes,
+					as: 'serviceTypes',
+					attributes: ['service_type', 'service_name']
+				}
+			]
+		});
+		res.json(servicesResult);
+	} catch (err) {
+		if (!err.statusCode) {
+			err.statusCode = 500;
+		}
+		next(err);
+	}
+};
+
+// Add a Dealer Service
+exports.addDealerService = async (req, res, next) => {
+	try {
+		// Check if Service already exists in Service Table
+		const serviceCheck = await dealerServices.findOne({
+			attributes: ['service_id'],
+			where: {
+				dealerTblDealerId: req.body.dealerTblDealerId,
+				service_type_id: req.body.service_type_id
+			}
+		});
+		//console.log(serviceCheck);
+		if (serviceCheck !== null) {
+			res.send('Dealer service already exists');
+		} else {
+			// Add the Service to Service Table
+			const result = await dealerServices.create(req.body);
+			// console.log(result.service_id);
+			res.json(result);
 		}
 	} catch (err) {
 		if (!err.statusCode) {
