@@ -34,7 +34,7 @@ exports.getCustomerByMobileNum = async (req, res, next) => {
 				{
 					model: CustomerAddress,
 					as: 'customer_location',
-					attributes: ['locality', 'city', 'state', 'pincode', 'lat', 'long', 'isHomeAddress']
+					attributes: ['id','locality', 'city', 'state', 'pincode', 'lat', 'long', 'isHomeAddress']
 				}
 			]
 		});
@@ -51,8 +51,8 @@ exports.getCustomerByMobileNum = async (req, res, next) => {
 exports.createCustomer = async (req, res, next) => {
 	try {
 		const result = await Customer.create(req.body);
-		let addressData = await createAddress(result, req.body.location);
-		let updatedCustomer = Object.assign({}, result.dataValues, { addressData });
+		let customer_location = await createAddress(result, req.body.customer_location);
+		let updatedCustomer = Object.assign({}, result.dataValues, { customer_location });
 		res.json(updatedCustomer);
 	} catch (err) {
 		if (!err.statusCode) {

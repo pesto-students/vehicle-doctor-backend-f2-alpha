@@ -97,7 +97,7 @@ exports.getDealersByCity = async (req, res, next) => {
 				{
 					model: dealerServices,
 					as: 'Services',
-					attributes: ['discription', 'cost']
+					attributes: ['service_id','discription', 'cost']
 				},
 				{
 					model: serviceModel,

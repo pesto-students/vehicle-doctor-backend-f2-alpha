@@ -41,7 +41,7 @@ const CustomerAddress = db.define(
 	}
 );
 
-Customer.hasMany(CustomerAddress, {
+Customer.hasOne(CustomerAddress, {
 	foreignKey: { name: 'customer_id', allowNull: false },
 	as: 'customer_location'
 });
