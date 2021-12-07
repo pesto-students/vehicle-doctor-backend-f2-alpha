@@ -120,7 +120,7 @@ exports.getServiceByDealerID = async (req, res, next) => {
 	try {
 		var id = req.params.id;
 		let servicesResult = await dealerServices.findAll({
-			attributes: ['service_id', 'discription'],
+			attributes: ['service_id', 'discription','cost'],
 			where: { dealerTblDealerId: id },
 			include: [
 				{
