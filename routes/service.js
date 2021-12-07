@@ -10,7 +10,7 @@ router.get('/', (req, res, next) => {
 router.get('/types', (req, res) =>
 	serviceTypes
 		.findAll({
-			attributes: ['id', 'service_type', 'service_name']
+			attributes: ['id', 'service_type', 'service_name','service_image_url']
 		})
 		.then((serviceTypes) => res.send(serviceTypes))
 		.catch((err) => res.send(err))

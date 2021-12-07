@@ -11,6 +11,9 @@ const serviceTypes= db.define("service_lookup",{
         },
         service_name:{
             type:Sequelize.STRING
+        },
+        service_image_url:{
+            type:Sequelize.STRING
         }
     },{
         timestamps: true,
@@ -21,7 +24,7 @@ const serviceTypes= db.define("service_lookup",{
 
 //Need for Future purpose
 
-// serviceTypes.sync({force:true}).then(() => {
+// serviceTypes.sync({alter:true}).then(() => {
 //     console.log('table created');
 // });
 
