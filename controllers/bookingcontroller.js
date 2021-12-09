@@ -1,7 +1,7 @@
 const dealerModel = require('../models/dealerModel');
-const dealerServices = require("../models/dealer_serviceModel");
-const serviceBooking= require('../models/service_booking')
-const Status = require('../models/service_status')
+const dealerServices = require('../models/dealer_serviceModel');
+const serviceBooking = require('../models/service_booking');
+const Status = require('../models/service_status');
 const vehicleModel = require('../models/vehicle_type');
 const customerModel = require('../models/customerModel');
 const ServiceHistory = require('../models/service_history');
@@ -18,59 +18,66 @@ exports.addCurrentBooking = async (req, res, next) => {
 	}
 };
 
-exports.getCurrentBooking = async(req,res,next) =>{
-    try {
-        var referenceNum = req.params.refnum;
-        let bookingDetails = await serviceBooking.findOne({
-            attributes:['refrence_id','vehicle_reg_no','vehicle_model','pick_up','pick_up_date','drop_date'],
-            where : { refrence_id:referenceNum},
-            include:[
-                {
-                model:customerModel,
-                as :'Customer',
-                attributes:['customer_name']
-               },
-               {
-                model:Status,
-                as :'status',
-                attributes:['status_name']
-               },
-               {
-                model:dealerModel,
-                as:'Dealer',
-                attributes:['name','mobile']
-               },
-               {
-                model:dealerServices,
-                as :'dealerService',
-                attributes:['discription']
-               },
-               {
-                  model:vehicleModel,
-                  as:'Vehicle_type',
-                  attributes:['vehicle_type']
-               }
-            ]
-        })
-        res.send(bookingDetails);
-    } catch (err) {
-     if (!err.statusCode) {
-         err.statusCode = 500;
-       }
-       next(err);
-    }
- }
+exports.getCurrentBooking = async (req, res, next) => {
+	try {
+		var referenceNum = req.params.refnum;
+		let bookingDetails = await serviceBooking.findOne({
+			attributes: [
+				'refrence_id',
+				'vehicle_reg_no',
+				'vehicle_model',
+				'pick_up',
+				'pick_up_date',
+				'drop_date'
+			],
+			where: { refrence_id: referenceNum },
+			include: [
+				{
+					model: customerModel,
+					as: 'Customer',
+					attributes: ['customer_name']
+				},
+				{
+					model: Status,
+					as: 'status',
+					attributes: ['status_name']
+				},
+				{
+					model: dealerModel,
+					as: 'Dealer',
+					attributes: ['name', 'mobile']
+				},
+				{
+					model: dealerServices,
+					as: 'dealerService',
+					attributes: ['discription']
+				},
+				{
+					model: vehicleModel,
+					as: 'Vehicle_type',
+					attributes: ['vehicle_type']
+				}
+			]
+		});
+		res.send(bookingDetails);
+	} catch (err) {
+		if (!err.statusCode) {
+			err.statusCode = 500;
+		}
+		next(err);
+	}
+};
 
- // Add Feedback for a Service
+// Add Feedback for a Service
 exports.addServiceFeedback = async (req, res, next) => {
 	try {
 		// Check for Service Status before adding Feedback
 		({ customer_id, dealer_id, service_ref_id } = req.body);
-        //Fix Required
+		//Fix Required
 		//const service_status = checkServiceStatus(customer_id, dealer_id, service_ref_id);
 		//if (service_status > 0) {
-			const result = await ServiceHistory.create(req.body);
-			res.status(201).json(result.id);
+		const result = await ServiceHistory.create(req.body);
+		res.status(201).json(result.id);
 		// } else {
 		// 	// Return zero if no Service History exists with a completed status
 		// 	res.status(201).json(0);
@@ -132,6 +139,56 @@ const checkServiceStatus = async (customerId, dealerId, serviceId) => {
 			attributes: ['id']
 		});
 		return BookingData;
+	} catch (err) {
+		if (!err.statusCode) {
+			err.statusCode = 500;
+		}
+		next(err);
+	}
+};
+
+// Fetch the bookings of a Dealer based on Dealer Id
+exports.getDealerBookingData = async (req, res, next) => {
+	try {
+		var id = req.params.id;
+		let bookingDetails = await serviceBooking.findAll({
+			attributes: [
+				'refrence_id',
+				'vehicle_reg_no',
+				'vehicle_model',
+				'pick_up',
+				'pick_up_date',
+				'drop_date'
+			],
+			where: { dealer_id: id },
+			include: [
+				{
+					model: customerModel,
+					as: 'Customer',
+					attributes: ['customer_name']
+				},
+				{
+					model: Status,
+					as: 'status',
+					attributes: ['status_name']
+				},
+				{
+					model: dealerServices,
+					as: 'dealerService',
+					attributes: ['discription']
+				},
+				{
+					model: vehicleModel,
+					as: 'Vehicle_type',
+					attributes: ['vehicle_type']
+				}
+			]
+		});
+		if (bookingDetails) {
+			res.json(bookingDetails);
+		} else {
+			res.send('No Booking Data');
+		}
 	} catch (err) {
 		if (!err.statusCode) {
 			err.statusCode = 500;
