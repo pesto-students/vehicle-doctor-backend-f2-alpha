@@ -152,6 +152,14 @@ exports.getDealerBookingData = async (req, res, next) => {
 	try {
 		var id = req.params.id;
 		let bookingDetails = await serviceBooking.findAll({
+			attributes: [
+				'refrence_id',
+				'vehicle_reg_no',
+				'vehicle_model',
+				'pick_up',
+				'pick_up_date',
+				'drop_date'
+			],
 			where: { dealer_id: id },
 			include: [
 				{
@@ -163,11 +171,6 @@ exports.getDealerBookingData = async (req, res, next) => {
 					model: Status,
 					as: 'status',
 					attributes: ['status_name']
-				},
-				{
-					model: dealerModel,
-					as: 'Dealer',
-					attributes: ['name', 'mobile']
 				},
 				{
 					model: dealerServices,
