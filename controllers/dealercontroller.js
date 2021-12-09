@@ -49,6 +49,7 @@ exports.getDealerbyServiceType = async (req, res, next) => {
 		if (req.params.vehicleID != null) whereStatement.id = req.params.vehicleID;
 
 		let dealersResult = await dealerModel.findAll({
+			
 			include: [
 				{
 					model: dealerServices,
@@ -66,7 +67,6 @@ exports.getDealerbyServiceType = async (req, res, next) => {
 					as: 'dealer_history',
 					attributes: ['rating', 'comments'],
 					order: [['created_at', 'DESC']],
-					limit: 3
 				}
 			]
 		});
