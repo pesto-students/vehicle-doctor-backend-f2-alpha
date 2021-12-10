@@ -170,7 +170,7 @@ exports.getDealerBookingData = async (req, res, next) => {
 				{
 					model: Status,
 					as: 'status',
-					attributes: ['status_name']
+					attributes: ['status_id', 'status_name']
 				},
 				{
 					model: dealerServices,
