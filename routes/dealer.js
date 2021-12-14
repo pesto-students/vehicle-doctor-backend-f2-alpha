@@ -5,7 +5,7 @@ const dealerController = require('../controllers/dealercontroller');
 
 router.get('/dealerByID/:id/:serviceID', dealerController.getDealerbyID);
 
-router.get('/serviceType/:serviceType/:vehicleID?', dealerController.getDealerbyServiceType);
+router.get('/serviceType/:city/:serviceType/:vehicleID?', dealerController.getDealerbyServiceType);
 
 router.get('/dealersByCity/:city/:vehicleid', dealerController.getDealersByCity);
 
