@@ -143,13 +143,13 @@ exports.getServiceByDealerID = async (req, res, next) => {
 exports.AddDealer = async (req, res, next) => {
 	try {
 		const result = await dealerModel.create(req.body);
-		const resultID = result.dealer_id;
-		var serviceData = req.body.services.map(function (item) {
-			var updatedService = Object.assign({}, item);
-			updatedService.dealerTblDealerId = resultID;
-			return updatedService;
-		});
-		await dealerServices.bulkCreate(serviceData);
+		//const resultID = result.dealer_id;
+		// var serviceData = req.body.services.map(function (item) {
+		// 	var updatedService = Object.assign({}, item);
+		// 	updatedService.dealerTblDealerId = resultID;
+		// 	return updatedService;
+		// });
+		// await dealerServices.bulkCreate(serviceData);
 		res.json(result);
 	} catch (err) {
 		if (!err.statusCode) {
