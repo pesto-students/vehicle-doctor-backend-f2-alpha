@@ -1,4 +1,4 @@
-# Introduction to the DealerFinder-Backend app
+# Introduction to the VehicleDr-Backend app
 
 This project includes the different APIs that provide data to the front-end of the application. 
 
