@@ -1,6 +1,4 @@
-# <p align="center"> ![image logo](img/logo.jpg) <p><!-- omit in toc -->
-
-# <p align="center"> Vehicle Doctor Backend</p><!-- omit in toc -->
+# <p align="center"> ![image logo](img/logo.jpg) <br /> Vehicle Doctor Backend</p><!-- omit in toc -->
 
 Vehicle Doctor is a platform to book auto service, get emergency roadside assistance and avail free pickup and drop service after comparing prices of multiple dealers on the platform.
 
