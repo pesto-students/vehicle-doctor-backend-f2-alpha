@@ -1,10 +1,12 @@
+# <p align="center"> ![image logo](img/logo.jpg) <p><!-- omit in toc -->
+
 # <p align="center"> Vehicle Doctor Backend</p><!-- omit in toc -->
 
 Vehicle Doctor is a platform to book auto service, get emergency roadside assistance and avail free pickup and drop service after comparing prices of multiple dealers on the platform.
 
 Customers can check ratings and reviews of each dealer while booking a service. Dealers can leverage this platform to build a good customer base.
 
-The backend includes the different APIs that provide data to the front-end of the application.
+The backend includes the different APIs that interact with and provide data to the application's front-end.
 <br />
 <br />
 
@@ -62,4 +64,4 @@ The backend APIs use the Sequelize ORM to fetch the data from the database. We h
 
 ## License
 
-[MIT](LICENSE)
+Distributed under the MIT License. See `LICENSE` for more information.
