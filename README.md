@@ -57,6 +57,7 @@ The backend APIs use the Sequelize ORM to fetch the data from the database. We h
 
 - [Arunabh Ghosh](https://github.com/arunabhg)
 - [Gagandeep Singh](https://github.com/gagan1999)
+- [Kirti Gaur](https://github.com/kirtigaur11) 
   <br />
   <br />
 
